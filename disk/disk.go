@@ -21,7 +21,6 @@ package disk
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"strings"
 	"syscall"
 )
@@ -52,14 +51,6 @@ func GetStats() ([]*FSStats, error) {
 		}
 
 		mount := fields[4]
-
-		_, err := os.Stat(mount)
-		if os.IsNotExist(err) {
-			continue
-		}
-		if err != nil {
-			return nil, fmt.Errorf("getting stat for %s: %s", mount, err)
-		}
 
 		statfs := &syscall.Statfs_t{}
 		if err := syscall.Statfs(mount, statfs); err != nil {

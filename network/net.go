@@ -28,6 +28,11 @@ type Stats struct {
 	Status  string
 }
 
+type IpProxyConfig struct {
+	Manual bool
+	Config gonetworkmanager.IpProxyConfig
+}
+
 func GetNetworkStats() (*Stats, error) {
 	res := &Stats{}
 	nm, err := gonetworkmanager.NewNetworkManager()
@@ -44,6 +49,15 @@ func AddWirelessConnection(ssid, password string) error {
 	if err != nil {
 		return err
 	}
-	nm.AddConnection(ssid, password)
+	nm.AddWirelessConnection(ssid, password)
+	return nil
+}
+
+func AddWiredConnection(config IpProxyConfig) error {
+	nm, err := gonetworkmanager.NewNetworkManager()
+	if err != nil {
+		return err
+	}
+	nm.AddWiredConnection(config.Manual, config.Config)
 	return nil
 }

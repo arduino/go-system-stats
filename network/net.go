@@ -19,7 +19,7 @@
 package net
 
 import (
-	"github.com/facchinm/gonetworkmanager"
+	"github.com/arduino/gonetworkmanager"
 )
 
 // Stats contains data about the memory avaible/used

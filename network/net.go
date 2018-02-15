@@ -34,14 +34,18 @@ type IpProxyConfig struct {
 }
 
 func GetNetworkStats() (*Stats, error) {
-	res := &Stats{}
 	nm, err := gonetworkmanager.NewNetworkManager()
 	if err != nil {
 		return nil, err
 	}
-	res.Devices = nm.GetDevices()
-	res.Status = nm.GetState().String()
-	return res, nil
+	devices, err := nm.GetDevices()
+	if err != nil {
+		return nil, err
+	}
+	return &Stats{
+		Devices: devices,
+		Status:  nm.GetState().String(),
+	}, nil
 }
 
 func AddWirelessConnection(ssid, password string) error {
